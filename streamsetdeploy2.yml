@@ -56,7 +56,7 @@
       cron: 
         name: "Ansible Provision"
         minute:  "*/10"
-        job: "/usr/bin/ansible-pull -o -U > /dev/null"
+        job: "/usr/bin/ansible-pull -o -U git@github.com:janakinaveengit/Ansible-pull.git > /dev/null"
 
 
 
