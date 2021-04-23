@@ -49,6 +49,7 @@
     - name: starting Streamsets 
       become_user: sdc
       shell: /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/start.sh
+      register: remote_tmp
       
 
 
