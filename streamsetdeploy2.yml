@@ -1,0 +1,62 @@
+---
+- hosts: localhost
+  connection: local
+  become: true 
+  
+  tasks:
+    - name: Installing Java
+      yum: 
+        name: java-1.8.0-openjdk
+        state: latest
+  
+    - name: Create Deployment user
+      group: name="sdc" system=yes
+
+    - name: Create deployment user
+      user: name="sdc" createhome=no system=yes group="sdc"
+
+    - name: Make temporary download dir
+      file: dest="/tmp/sdc" state=directory mode=755
+ 
+    - name: Fetch Streamsets tarball
+      become_user: sdc
+      get_url:
+        url="http://archives.streamsets.com.s3.amazonaws.com/datacollector/3.22.1/tarball/streamsets-datacollector-common-3.22.1.tgz" 
+        dest="/tmp/sdc/streamsets-datacollector-common-3.22.1.tgz"
+      register: new_sdc_tarball
+    
+    - name: Create installation directory
+      file: dest="/opt/streamsets-datacollector" state=directory mode=755 owner="sdc" group="sdc"
+ 
+    - name: Extract SDC tarball
+      become_user: sdc
+      command: "tar -xf /tmp/sdc/streamsets-datacollector-common-3.22.1.tgz -C /opt/streamsets-datacollector/"  
+        
+ 
+    - name: Creating script to start streamsets 
+      ansible.builtin.lineinfile: 
+        path: /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/start.sh
+        line: nohup ./streamsets dc </dev/null >/dev/null 2>&1 & 
+        mode: '0777'
+        create: yes
+     
+    - name: Changing permissions Recursively
+      ansible.builtin.file:
+        path: /opt/streamsets-datacollector
+        state: directory
+        recurse: yes
+        owner: sdc
+        group: sdc
+                
+    - name: starting Streamsets 
+      become_user: sdc
+      shell: /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/start.sh
+      
+    - name: 
+      cron: 
+        name: "Ansible Provision"
+        minute:  "*/10"
+        job: "/usr/bin/ansible-pull -o -U > /dev/null"
+
+
+
