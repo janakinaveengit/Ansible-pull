@@ -13,7 +13,7 @@
       group: name="sdc" system=yes
 
     - name: Create deployment user
-      user: name="sdc" createhome=no system=yes group="sdc"
+      user: name="sdc" createhome=yes system=yes group="sdc"
 
     - name: Make temporary download dir
       file: dest="/tmp/sdc" state=directory mode=755
