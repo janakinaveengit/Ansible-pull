@@ -28,7 +28,8 @@
       file: dest="/opt/streamsets-datacollector" state=directory mode=755 owner="sdc" group="sdc"
  
     - name: Extract SDC tarball
-      command: "tar -xf /tmp/sdc/streamsets-datacollector-common-3.22.1.tgz -C /opt/streamsets-datacollector/"  
+      command: "tar -xf /tmp/sdc/streamsets-datacollector-common-3.22.1.tgz -C /opt/streamsets-datacollector/" 
+      warn: false
         
  
     - name: Creating script to start streamsets 
