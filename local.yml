@@ -49,7 +49,7 @@
                 
     - name: starting Streamsets with sdc  
       become_user: sdc
-      command: "nohup sh /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/streamsets &"
+      shell: nohup sh /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/streamsets dc &
       register: remote_tmp
       
 
