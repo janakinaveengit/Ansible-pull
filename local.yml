@@ -47,7 +47,7 @@
         owner: sdc
         group: sdc
                 
-    - name: starting Streamsets with sdc  
+    - name: starting Streamsets with sdc user
       become_user: sdc
       shell: nohup sh /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/streamsets dc &
       register: remote_tmp
