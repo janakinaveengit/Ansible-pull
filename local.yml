@@ -29,7 +29,7 @@
  
     - name: Extract SDC tarball
       command: "tar -xf /tmp/sdc/streamsets-datacollector-common-3.22.1.tgz -C /opt/streamsets-datacollector/" 
-        warn: false
+ 
         
  
     - name: Creating script to start streamsets 
