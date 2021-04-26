@@ -18,7 +18,7 @@
     - name: Make Temporary Download Directory
       file: dest="/tmp/sdc" state=directory mode=755
  
-    - name: Fetch Streamsets Tarball and Download
+    - name: Fetch Streamsets Tarball and Download 
       get_url:
         url="http://archives.streamsets.com.s3.amazonaws.com/datacollector/3.22.1/tarball/streamsets-datacollector-common-3.22.1.tgz" 
         dest="/tmp/sdc/streamsets-datacollector-common-3.22.1.tgz"
@@ -28,9 +28,7 @@
       file: dest="/opt/streamsets-datacollector" state=directory mode=755 owner="sdc" group="sdc"
  
     - name: Extract Streamsets Tarball
-      command: "tar -xf /tmp/sdc/streamsets-datacollector-common-3.22.1.tgz -C /opt/streamsets-datacollector/" 
- 
-        
+      command: "tar -xf /tmp/sdc/streamsets-datacollector-common-3.22.1.tgz -C /opt/streamsets-datacollector/"  
  
     - name: Creating Startup Script for Streamsets 
       ansible.builtin.lineinfile: 
