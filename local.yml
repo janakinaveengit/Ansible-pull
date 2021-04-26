@@ -12,34 +12,34 @@
     - name: Create Deployment user
       group: name="sdc" system=yes
 
-    - name: Create deployment user
+    - name: Create Deployment Group
       user: name="sdc" createhome=yes system=yes group="sdc"
 
-    - name: Make temporary download dir
+    - name: Make Temporary Download Directory
       file: dest="/tmp/sdc" state=directory mode=755
  
-    - name: Fetch Streamsets tarball
+    - name: Fetch Streamsets Tarball and Download
       get_url:
         url="http://archives.streamsets.com.s3.amazonaws.com/datacollector/3.22.1/tarball/streamsets-datacollector-common-3.22.1.tgz" 
         dest="/tmp/sdc/streamsets-datacollector-common-3.22.1.tgz"
       register: new_sdc_tarball
     
-    - name: Create installation directory
+    - name: Create Installation Directory
       file: dest="/opt/streamsets-datacollector" state=directory mode=755 owner="sdc" group="sdc"
  
-    - name: Extract SDC tarball
+    - name: Extract Streamsets Tarball
       command: "tar -xf /tmp/sdc/streamsets-datacollector-common-3.22.1.tgz -C /opt/streamsets-datacollector/" 
  
         
  
-    - name: Creating script to start streamsets 
+    - name: Creating Startup Script for Streamsets 
       ansible.builtin.lineinfile: 
         path: /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/start.sh
         line: nohup ./streamsets dc </dev/null >/dev/null 2>&1 & 
         mode: '0777'
         create: yes
      
-    - name: Changing permissions Recursively
+    - name: Changing Permissions Recursively
       ansible.builtin.file:
         path: /opt/streamsets-datacollector
         state: directory
@@ -47,7 +47,7 @@
         owner: sdc
         group: sdc
                 
-    - name: starting Streamsets with sdc user
+    - name: Starting Streamsets with SDC user
       become_user: sdc
       shell: nohup sh /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/streamsets dc &
       register: remote_tmp
