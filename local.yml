@@ -4,7 +4,7 @@
   become: true 
   
   tasks:
-    - name: Installing JDK 8
+    - name: Installing JDK
       yum: 
         name: java-1.8.0-openjdk
         state: latest
