@@ -29,13 +29,6 @@
  
     - name: Extract Streamsets Tarball
       command: "tar -xf /tmp/sdc/streamsets-datacollector-common-3.22.1.tgz -C /opt/streamsets-datacollector/"  
- 
-    - name: Creating Startup Script for Streamsets 
-      ansible.builtin.lineinfile: 
-        path: /opt/streamsets-datacollector/streamsets-datacollector-3.22.1/bin/start.sh
-        line: nohup ./streamsets dc </dev/null >/dev/null 2>&1 & 
-        mode: '0777'
-        create: yes
      
     - name: Changing Permissions Recursively
       ansible.builtin.file:
